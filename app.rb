@@ -9,12 +9,19 @@ def init_db
 	@db.results_as_hash = true
 end
 
+#вызыается каждый раз при перезагрузке страницы любой страницы
 before do
+	#иницализация БД
 	init_db
 end
 
+#configure вызывается каждый раз приконфигируции приложения:
+#когда изменился код программы и перезагрузилась страница
+
 configure do
+	#инициализация БД
 	init_db
+	#создает таблицу
 	@db.execute 'CREATE TABLE IF NOT EXISTS Posts 
 	(
 	 		id INTEGER PRIMARY KEY AUTOINCREMENT, 
