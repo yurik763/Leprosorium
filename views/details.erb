@@ -6,7 +6,17 @@
 		Added at <%= @row['ceated_date']%>
 	</p>
 	<br/>
-	<h4>Comments</h4>
+	<h4>Comments:</h4>
+
+<% @comments.each do |comment|%>
+	<p>
+	<%= comment['content']%>
+		<br/>
+		<span style="font-size: 75%; color: #999">Added at <%= comment['ceated_date']%></span>
+	</p>
+	<hr/>
+<%end%>
+
 	<p>
 	<form action="/details/<%= @row['id']%>" method="POST" role="form">
 	    <textarea name="content" class="form-control" id="exampleFormControlTextarea1" rows="6" placeholder="Type comment here"></textarea>
