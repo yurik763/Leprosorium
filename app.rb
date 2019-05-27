@@ -85,5 +85,22 @@ post '/details/:post_id' do
 	post_id = params[:post_id]
 	content = params[:content]
 
+	#сохранение данных в БД
+  	@db.execute 'insert into Comments 
+  		(
+  			content, 
+  			ceated_date, 
+  			post_id
+  		) 
+  		values 
+  		(
+  			?,
+  			datetime(),
+  			?
+  		)', [content, post_id] # сколько занков ? столько и элементов в масиве
+			 
 	erb "You typed comment #{content} for post #{post_id}"
+
+	#перенаправляем на страницу поста
+	 redirect to('/details/' + post_id)
 end
