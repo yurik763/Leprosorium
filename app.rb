@@ -26,7 +26,8 @@ configure do
 	(
 	 		id INTEGER PRIMARY KEY AUTOINCREMENT, 
 	 		ceated_date DATE, 
-	 		content TEXT
+	 		content TEXT,
+	 		username TEXT
 	 )'
 
 	#создает таблицу
@@ -52,6 +53,7 @@ end
 
 post '/new' do
   @content = params[:content]
+  @username = params [:username]
 
   if @content.length <= 0
   		@error = 'Введите текст поста'
@@ -59,7 +61,7 @@ post '/new' do
   end
 
   #сохранение данных в БД
-  @db.execute 'insert into Posts (content, ceated_date) values (?,datetime())', [@content]
+  @db.execute 'insert into Posts (content, ceated_date, username) values (?,datetime(),?)', [@content, @username]
 
   #перенаправление на главную страницу
   redirect to('/')
@@ -67,43 +69,43 @@ end
 
 
 #вывод информации о посте
-get '/details/:post_id' do
+#get '/details/:post_id' do
 	#получаем переменную из url'a
-	post_id = params[:post_id]
+#	post_id = params[:post_id]
 
 	#получаем список постов(у нас будет только один пост)
-	results = @db.execute 'select * from Posts where id = ?', [post_id]  #выбираются посты с id страницы
+#	results = @db.execute 'select * from Posts where id = ?', [post_id]  #выбираются посты с id страницы
 	#выбираем этот один пост в переменную row
-	@row = results[0]
+#	@row = results[0]
 
 	#выбираем комментарий для нашего поста
-	@comments = @db.execute 'select * from Comments where post_id = ? order by id', [post_id]
+#	@comments = @db.execute 'select * from Comments where post_id = ? order by id', [post_id]
 
 	#возвращаем представление в details.erb
-	erb :details
-end
+#	erb :details
+#end
 
 #обработчик post-запроса /details/...  браузер отправляет данные на сервер, мы их принемае
-post '/details/:post_id' do
-	post_id = params[:post_id]
-	content = params[:content]
+#post '/details/:post_id' do
+#	post_id = params[:post_id]
+#	content = params[:content]
 
 	#сохранение данных в БД
-  	@db.execute 'insert into Comments 
-  		(
-  			content, 
-  			ceated_date, 
-  			post_id
-  		) 
-  		values 
-  		(
-  			?,
-  			datetime(),
-  			?
-  		)', [content, post_id] # сколько занков ? столько и элементов в масиве
+ # 	@db.execute 'insert into Comments 
+ # 		(
+ # 			content, 
+ # 			ceated_date, 
+ # 			post_id
+ # 		) 
+ # 		values 
+ # 		(
+  #			?,
+ # 			datetime(),
+ # 			?
+ # 		)', [content, post_id] # сколько занков ? столько и элементов в масиве
 			 
-	erb "You typed comment #{content} for post #{post_id}"
+#	erb "You typed comment #{content} for post #{post_id}"
 
 	#перенаправляем на страницу поста
-	 redirect to('/details/' + post_id)
-end
+#	 redirect to('/details/' + post_id)
+#end
