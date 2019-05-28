@@ -53,7 +53,7 @@ end
 
 post '/new' do
   @content = params[:content]
-  @username = params [:username]
+  @username = params[:username]
 
   if @content.length <= 0
   		@error = 'Введите текст поста'
