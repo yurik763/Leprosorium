@@ -2,6 +2,10 @@
 
 <p>
 <form action="/new" method="POST" role="form">
+	<div class="form-group">
+    <label>Ваше имя</label>
+    <input name="username" type="text" class="form-control" placeholder="Ваше имя" value="<%= @username %>">
+    </div>
     <textarea name="content" class="form-control" id="exampleFormControlTextarea1" rows="6" placeholder="Type post test here"></textarea>
 </br>
     <button type="submit" class="btn btn-primary">Submit</button>
